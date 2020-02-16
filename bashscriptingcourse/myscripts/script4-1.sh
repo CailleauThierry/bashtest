@@ -1,19 +1,28 @@
 #!/bin/bash
-#!/bin/bash
-if [ test -f FILEORFOLDER /etc/shadow ]
+# script4-1.sh on 02_16_2020 by Thierry Cailleau following a https://www.udemy.com/course/bash-scripting and adapting for ubuntu
+# Tested on Ubuntu 19.10
+
+read -p "Enter a file or Folder: " FILEORFOLDER
+if [ -f $FILEORFOLDER ]
   then
-    echo "This is not a File"
-    if [ -d FILEORFOLDER /etc/shadow ]
+    echo "$FILEORFOLDER is a file from then"
+    if [ -d $FILEORFOLDER ]
       then
-        echo "This is not a folder"
+        echo "$FILEORFOLDER is a folder from then"
       else
-        echo "This is a folder"
+
+      echo "$FILEORFOLDER is not a folder from then"
     fi
   else
-      echo "This is a File"
+    echo "$FILEORFOLDER is not a file from else"
+    if [ -d $FILEORFOLDER ]
+      then
+        echo "$FILEORFOLDER is not a folder from else"
+      else
+        echo "$FILEORFOLDER is a folder from else"
+    fi
 fi
-# script4-1.sh on 02_01_2020 by Thierry Cailleau following a https://www.udemy.com/course/bash-scripting
-# Tested on Ubuntu 19.10
+
 # thierry@u1910:~/Documents/bashtest$ test -f testfile;echo $?
 # 0
 # thierry@u1910:~/Documents/bashtest$ test -d testfile;echo $?
@@ -22,3 +31,27 @@ fi
 # 0
 # thierry@u1910:~/Documents/bashtest$ test -f testfolder;echo $?
 # 1
+# result of working script on 02_16_2020 
+# thierry@u1910:~/Documents/bashtest/bashscriptingcourse/myscripts$ chmod +x script4-1.sh 
+# thierry@u1910:~/Documents/bashtest/bashscriptingcourse/myscripts$ ./script4-1.sh 
+# ./script4-1.sh: line 3: [: too many arguments
+# This is a File
+# thierry@u1910:~/Documents/bashtest/bashscriptingcourse/myscripts$ mkdir testfolder
+# thierry@u1910:~/Documents/bashtest/bashscriptingcourse/myscripts$ touch testfile
+# thierry@u1910:~/Documents/bashtest/bashscriptingcourse/myscripts$ ./script4-1.sh testfolder
+# Enter a file or Folder: testfile
+# testfile is not a file
+# testfile is a folder
+# thierry@u1910:~/Documents/bashtest/bashscriptingcourse/myscripts$ ./script4-1.sh testfolder
+# Enter a file or Folder: testfile
+# testfile is not a file first then
+# testfile is a folder first then
+# thierry@u1910:~/Documents/bashtest/bashscriptingcourse/myscripts$ ./script4-1.sh testfolder
+# Enter a file or Folder: testfile
+# testfile is a file from then
+# testfile is not a folder from then
+# thierry@u1910:~/Documents/bashtest/bashscriptingcourse/myscripts$ ./script4-1.sh testfolder
+# Enter a file or Folder: testfoler
+# testfoler is not a file from else
+# testfoler is a folder from else
+# thierry@u1910:~/Documents/bashtest/bashscriptingcourse/myscripts$ 
